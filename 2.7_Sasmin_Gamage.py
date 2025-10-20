@@ -32,35 +32,45 @@ def force_cellphone_number(message,lower,upper):
             print(f"ERROR!, please enter between {lower}-{upper}")
     return cell #returning back a valid number within a range
 
-def main_menu():
+def main_menu(): #defining my function
+    ticket_options=["Friday Student",
+            "Friday General Admission",
+            "Friday Feldspar VIP Admission",
+            "Saturday Student",
+            "Saturday HTQ 18+",
+            "Saturday Feldspar VIP Exprience"]
+    ticket_prices=[65,70,220,65,125,220]
     print("*********** Dunedin Food Festival  2025. - Forsyth Barr - Dunedin – *************")
-    confirmed_bookings=[]
-    total_price = 0
-    choice = force_number("Please enter your choice: \n 0 to quit the program \n 1 to make a new booking",0,1)
-    while True:
+    confirmed_bookings=[] #setting my list to zero
+    total_price = 0 #setting my price to zero
+    while True: #infinite loop with forced input
+        choice = force_number("Please enter your choice: \n 0 to quit the program \n 1 to make a new booking",0,1)
         if choice == 0:
-            break
+            break #breaking out of the loop
         if choice == 1:
-            ticket_options=["1: Friday Student",65,
-            "2: Friday General Admission",70,
-            "3: Friday Feldspar VIP Admission",220,
-            "4: Saturday Student",65,
-            "5: Saturday HTQ 18+",125,
-            "6: Saturday Feldspar VIP Exprience",220]
-            print(ticket_options)
+            print("Avaliable Tickets: ")
+            for i in range(len(ticket_options)): #going through the ticket options
+                print(f"{i+1}. {ticket_options[i]} - ${ticket_prices[i]}")
             ticket_section = force_number("What ticket number do you want? ",1,6)
             quantity_ticket = force_number("How many tickets do you want? ",1,10)
-            total_price += 30
             first_name = force_name("Enter your first name: ",2,30)
             last_name = force_name("Enter your last name: ",2,30)
             cell_phone = force_cellphone_number("Enter your cellphone number: ",8,13)
+            total_price += 30
             confirm_booking = str(input("Do you wish to confirm this booking? (Y/N): "))
+            if confirm_booking.lower() == "N":
+                print("Okay...")
             if confirm_booking.lower() == "Y":
                 confirmed_bookings.append(ticket_options)
                 first_name_slice=first_name[0:2]
                 random_number=random.randint(100000,999999)
+                unique_code=last_name+first_name_slice+str(random_number)
+                name=first_name+str(" ")+last_name
+                date_time=datetime.datetime.now()
+                outF=open("bookings.txt")
+                outF.write(f"Customer Full Name: {name}")
+                outF.write(f"Customer Cellphone Number: {cell_phone}")
+                outF.write(f"Date and Time of Booking: {date_time}")
                 print("****Please remember to bring photo ID to the Forsyth Barr to pay for and collect your tickets***")
-                break
-            if confirm_booking.lower() == "N":
-                print("Okay...")
+            break
 main_menu() #calling out my functions
