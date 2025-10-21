@@ -1,5 +1,5 @@
-import datetime
-import random
+import datetime #generates a timestamp
+import random #that generates a random number
 
 def force_number(message,lower,upper): #The purpose of this function is to enter in a valid number within
     while True: #infinite loop that keeps repeating until a valid number is entered
@@ -56,21 +56,27 @@ def main_menu(): #defining my function
             first_name = force_name("Enter your first name: ",2,30)
             last_name = force_name("Enter your last name: ",2,30)
             cell_phone = force_cellphone_number("Enter your cellphone number: ",8,13)
-            total_price += 30
-            confirm_booking = str(input("Do you wish to confirm this booking? (Y/N): "))
-            if confirm_booking.lower() == "N":
-                print("Okay...")
-            if confirm_booking.lower() == "Y":
+            ticket_type = ticket_options[ticket_section-1]
+            price = ticket_prices[ticket_section-1]
+            total_price += price * quantity_ticket + 30
+            print("Total (incl. $30 fee): $", total_price)
+            confirm_booking = input("Do you wish to confirm this booking? (Y/N): ").upper() #capital letters don't matter in this response
+            if confirm_booking == "Y": #checking for the answer
                 confirmed_bookings.append(ticket_options)
                 first_name_slice=first_name[0:2]
                 random_number=random.randint(100000,999999)
                 unique_code=last_name+first_name_slice+str(random_number)
                 name=first_name+str(" ")+last_name
                 date_time=datetime.datetime.now()
-                outF=open("bookings.txt")
-                outF.write(f"Customer Full Name: {name}")
-                outF.write(f"Customer Cellphone Number: {cell_phone}")
-                outF.write(f"Date and Time of Booking: {date_time}")
+                outF=open("booking.txt", "a") #opens the bookings text file
+                outF.write(f"\nTotal Price: {total_price}")
+                outF.write(f"\nCustomer Full Name: {name}")
+                outF.write(f"\nCustomer Cellphone Number: {cell_phone}")
+                outF.write(f"\nUnique Booking Reference Code: {unique_code}")
+                outF.write(f"\nDate and Time of Booking: {date_time}")
+                outF.close() #closes the bookings text file
                 print("****Please remember to bring photo ID to the Forsyth Barr to pay for and collect your tickets***")
-            break
-main_menu() #calling out my functions
+                break #breaking out of the loop
+            else:
+                print("Booking Cancelled.")
+main_menu() #calling out my main function
