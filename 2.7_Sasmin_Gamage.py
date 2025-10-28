@@ -4,6 +4,10 @@ import random #that generates a random number
 BOOKING_FEE=30 #flat booking fee for all tickets
 
 def force_number(message,lower,upper): #The purpose of this function is to enter in a valid number within
+    """
+    Ensures the user enters an integer within a specific range [lower,upper]. 
+    Repeats until a valid number is entered
+    """
     while True: #infinite loop that keeps repeating until a valid number is entered
         try:
             num=int(input(message)) #try to convert the input into an interger
@@ -16,6 +20,11 @@ def force_number(message,lower,upper): #The purpose of this function is to enter
     return num #returning back a valid number within a range
 
 def force_name(message,lower,upper):
+    """
+    Ensures the user enters a valid name, with only letters allowed. 
+    Length must be between lower and upper and this function.
+    The function also captalizses the first letter of each word. 
+    """
     while True: #this is an infinite loop that will only break if a valid name is entered
         name=str(input(message)).title()
         if len(name)>=lower and len(name)<=upper and name.isalpha():
@@ -84,7 +93,7 @@ def main_menu(): #defining my function
             outF.write(format_booking(name,cell_phone,ticket_type,quantity_ticket,total_price))
             outF.close() #closes the bookings text file
             print("****Please remember to bring photo ID to the Forsyth Barr to pay for and collect your tickets***")
-            break
+            break #exit confirmation loop
         else:   
             print("Booking Cancelled.")
 main_menu() #calling out my main function
