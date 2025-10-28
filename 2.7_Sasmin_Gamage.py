@@ -1,6 +1,8 @@
 import datetime #generates a timestamp
 import random #that generates a random number
 
+BOOKING_FEE=30 #flat booking fee for all tickets
+
 def force_number(message,lower,upper): #The purpose of this function is to enter in a valid number within
     while True: #infinite loop that keeps repeating until a valid number is entered
         try:
@@ -32,17 +34,19 @@ def force_cellphone_number(message,lower,upper):
             print(f"ERROR!, please enter between {lower}-{upper}")
     return cell #returning back a valid number within a range
 
-def confirm_booking():
-    while True:
-        confirm=force_number("Confirm booking? (1 = Yes, 2 = No):",1,2)
-        if confirm == 1:
-            return True
-        elif confirm == 2:
-            return False
+def get_user_choice(message):
+    return force_number(message,0,1) == 1
 
 def generate_reference(first_name,last_name,ticket_type):
     day = "FRI" if "Friday" in ticket_type else "SAT"
     return(last_name.upper()+first_name[0:2].upper()+str(random.randint(100000,999999))+day)
+
+def format_booking(name,cell_phone,ticket_type,quantity,total):
+    return (f"Name: {name}\n"
+           f"Phone: {cell_phone}\n"
+           f"Tickets: {ticket_type} x{quantity}\n"
+           f"Total Cost: ${total:.2f}\n" #formatted to 2dp
+           "---------------------------------------------------\n")
 
 def main_menu(): #defining my function
     print("*********** Dunedin Food Festival  2025. - Forsyth Barr - Dunedin – *************")
@@ -55,36 +59,32 @@ def main_menu(): #defining my function
     ticket_prices=[65,70,220,65,125,220]
     total_price=0
     confirmed_bookings=[] #setting my list to zero
-    while True:
-        choice = force_number("Please enter your choice: \n 0 to quit the program \n 1 to make a new booking",0,1)
-        if choice == 0:
-            break #breaking out of the loop
-        if choice == 1:
-            print("Avaliable Tickets: ")
-            for i in range(len(ticket_options)): #going through the ticket options
-                print(f"{i+1}. {ticket_options[i]} - ${ticket_prices[i]}")
-            ticket_section = force_number("What ticket number do you want? ",1,6)
-            quantity_ticket = force_number("How many tickets do you want? ",1,10)
-            first_name = force_name("Enter your first name: ",2,30)
-            last_name = force_name("Enter your last name: ",2,30)
-            name=first_name+" "+last_name
-            cell_phone = force_cellphone_number("Enter your cellphone number: ",8,13)
-            ticket_type = ticket_options[ticket_section-1]
-            price = ticket_prices[ticket_section-1]
-            total_price += price * quantity_ticket + 30
-            print("Total (incl. $30 fee): $", total_price)
-            if confirm_booking():
-                reference = generate_reference(first_name,last_name,ticket_type) 
-                date_time=datetime.datetime.now()       
-                confirmed_bookings.append(ticket_options)
-                outF=open("booking.txt", "a") #opens the bookings text file
-                outF.write(f"\nTotal Price: {total_price}")
-                outF.write(f"\nCustomer Full Name: {name}")
-                outF.write(f"\nCustomer Cellphone Number: {cell_phone}")
-                outF.write(f"\nUnique Booking Reference Code: {reference}")
-                outF.write(f"\nDate and Time of Booking: {date_time}")
-                outF.close() #closes the bookings text file
-                print("****Please remember to bring photo ID to the Forsyth Barr to pay for and collect your tickets***")
-            else:   
-                print("Booking Cancelled.")
+    while get_user_choice("\n 0 to quit the program, 1 to make a new booking: "): #main booking loop
+        print("Avaliable Tickets: ")
+        for i in range(len(ticket_options)): #going through the ticket options
+            print(f"{i+1}. {ticket_options[i]} - ${ticket_prices[i]}")
+        ticket_section = force_number("What ticket number do you want? ",1,6)
+        quantity_ticket = force_number("How many tickets do you want? ",1,10)
+        first_name = force_name("Enter your first name: ",2,30)
+        last_name = force_name("Enter your last name: ",2,30)
+        name=first_name+" "+last_name
+        cell_phone = force_cellphone_number("Enter your cellphone number: ",8,13)
+        ticket_type = ticket_options[ticket_section-1]
+        price = ticket_prices[ticket_section-1]
+        total_price += price * quantity_ticket + BOOKING_FEE
+        print("\nBooking Summary")
+        print("-----------------------------")
+        print(format_booking(name,cell_phone,ticket_type,quantity_ticket,total_price))
+        while get_user_choice("Confirm booking? (1=Yes, 0=No): "):
+            reference = generate_reference(first_name,last_name,ticket_type) 
+            date_time=datetime.datetime.now()       
+            outF=open("booking.txt", "a") #opens the bookings text file
+            outF.write(f"Booking Reference Code: {reference}\n")
+            outF.write(f"Date and Time of Booking: {date_time}\n")
+            outF.write(format_booking(name,cell_phone,ticket_type,quantity_ticket,total_price))
+            outF.close() #closes the bookings text file
+            print("****Please remember to bring photo ID to the Forsyth Barr to pay for and collect your tickets***")
+            break
+        else:   
+            print("Booking Cancelled.")
 main_menu() #calling out my main function
