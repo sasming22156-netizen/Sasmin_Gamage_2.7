@@ -40,3 +40,52 @@ Phone: 221679379
 Tickets: Friday Student x1
 Total Cost: $95.00
 ---------------------------------------------------
+Booking Reference Code: THOMPSONKI807497FRI
+Date and Time of Booking: 2025-10-29 11:14:58.958160
+Name: Kiri Thompson
+Phone: 0225554321
+Tickets: Friday Student x6
+Total Cost: $420.00
+---------------------------------------------------
+Booking Reference Code: RATAAR813591FRI
+Date and Time of Booking: 2025-10-29 11:16:27.850279
+Name: Ariana Rata
+Phone: 0215551234
+Tickets: Friday General Admission x4
+Total Cost: $310.00
+---------------------------------------------------
+Booking Reference Code: KINGITO984376FRI
+Date and Time of Booking: 2025-10-29 11:18:04.399564
+Name: Toby Kingi
+Phone: 0275555678
+Tickets: Friday Feldspar VIP Admission x1
+Total Cost: $250.00
+---------------------------------------------------
+Booking Reference Code: SMITHCH103165SAT
+Date and Time of Booking: 2025-10-29 11:20:21.827915
+Name: Chloe Smith
+Phone: 025559012
+Tickets: Saturday Student x2
+Total Cost: $160.00
+---------------------------------------------------
+Booking Reference Code: CHENLI419895SAT
+Date and Time of Booking: 2025-10-29 11:21:58.498696
+Name: Liam Chen
+Phone: 0215553456
+Tickets: Saturday HTQ 18+ x5
+Total Cost: $655.00
+---------------------------------------------------
+Booking Reference Code: JONESMA906357SAT
+Date and Time of Booking: 2025-10-29 13:39:46.310550
+Name: Maia Jones
+Phone: 0275557890
+Tickets: Saturday Feldspar VIP Exprience x2
+Total Cost: $430.00
+---------------------------------------------------
+Booking Reference Code: GAMAGESA877543FRI
+Date and Time of Booking: 2025-10-29 14:00:53.091721
+Name: Sasmin Gamage
+Phone: 221679379
+Tickets: Friday Student x1
+Total Cost: $95.00
+---------------------------------------------------
